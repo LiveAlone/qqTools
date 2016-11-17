@@ -23,5 +23,6 @@ public class {{singleClass.className}} implements Serializable{
     public void set{{field.fieldMethodName}}({{field.fieldType}} {{field.fieldName}}) {
         this.{{field.fieldName}} = {{field.fieldName}};
     }
+
 {% endfor %}
 }

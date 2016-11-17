@@ -60,9 +60,6 @@ public class SchemaGenerator implements CommandLineRunner {
             }
         }
 
-        // to test TODO
-        tables = Lists.newArrayList("t_course_package");
-
         // 获取对应的数据表的信息
         List<SingleClass> singleClasses = inspectFieldFromDatasource.queryInspectFields(tables);
 
@@ -71,7 +68,7 @@ public class SchemaGenerator implements CommandLineRunner {
         }
 
 
-        singleClasses.forEach(System.out::println);
+//        singleClasses.forEach(System.out::println);
 
         singleClasses.forEach(s -> fromDatasource(s));
 
