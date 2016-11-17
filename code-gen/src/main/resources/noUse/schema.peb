@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS `{{tableName}}`;
+
+
+CREATE TABLE `{{tableName}}` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  {% for field in fields %}
+  {% if not (field.column equals "id") %}
+  `{{field.column}}` {{field.jdbcType}} NULL,
+  {% endif %}
+  {% endfor %}
+  PRIMARY KEY (`id`)
+);

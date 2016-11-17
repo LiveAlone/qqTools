@@ -1,0 +1,52 @@
+
+import com.google.common.base.Throwables;
+import io.terminus.common.model.Response;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+/**
+ * Desc: {{singleClass.singleComment}} service
+ * Mail: yaoqj@terminus.io
+ * author: yaoqijun
+ * Date: {{now()}}
+ */
+@Service
+@Slf4j
+public class {{singleClass.className}}WriteServiceImpl implements {{singleClass.className}}WriteService{
+
+    private final {{singleClass.className}}Dao {{singleClass.lowClassName}}Dao;
+
+    public {{singleClass.className}}WriteServiceImpl({{singleClass.className}}Dao {{singleClass.lowClassName}}Dao){
+        this.{{singleClass.lowClassName}}Dao = {{singleClass.lowClassName}}Dao;
+    }
+
+    @Override
+    public Response<Boolean> deleteById(Long id) {
+        try{
+            return Response.ok({{singleClass.lowClassName}}Dao.delete(id));
+        }catch (Exception e){
+            log.error("delete by id fail, cause:{}", Throwables.getStackTraceAsString(e));
+            return Response.fail("delete.id.fail");
+        }
+    }
+
+    @Override
+    public Response<Boolean> create{{singleClass.className}}({{singleClass.className}} {{singleClass.lowClassName}}) {
+        try{
+            return Response.ok({{singleClass.lowClassName}}Dao.create({{singleClass.lowClassName}}));
+        }catch (Exception e){
+            log.error("create doctor pig fail, cause:{}", Throwables.getStackTraceAsString(e));
+            return Response.fail("create.{{singleClass.lowClassName}}.fail");
+        }
+    }
+
+    @Override
+    public Response<Boolean> update{{singleClass.className}}({{singleClass.className}} {{singleClass.lowClassName}}) {
+        try{
+            return Response.ok({{singleClass.lowClassName}}Dao.update({{singleClass.lowClassName}}));
+        }catch (Exception e){
+            log.error("update pig doctor fail, cause:{}", Throwables.getStackTraceAsString(e));
+            return Response.fail("update.{{singleClass.lowClassName}}.fail");
+        }
+    }
+}

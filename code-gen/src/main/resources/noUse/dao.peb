@@ -1,0 +1,12 @@
+import io.terminus.common.mysql.dao.MyBatisDao;
+import org.springframework.stereotype.Repository;
+
+/**
+ * Desc: {{singleClass.singleComment}} Dao
+ * Mail: yaoqj@terminus.io
+ * author: yaoqijun
+ * Date: {{now()}}
+ */
+@Repository
+public class {{singleClass.className}}Dao extends MyBatisDao<{{singleClass.className}}>{
+}

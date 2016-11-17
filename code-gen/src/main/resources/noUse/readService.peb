@@ -1,0 +1,22 @@
+
+import io.terminus.common.model.Paging;
+import io.terminus.common.model.Response;
+
+import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Desc: {{singleClass.singleComment}} service
+ * Mail: yaoqj@terminus.io
+ * author: yaoqijun
+ * Date: {{now()}}
+ */
+public interface {{singleClass.className}}ReadService {
+
+    Response<{{singleClass.className}}> queryById(@NotNull(message = "input.id.empty") Long id);
+
+    Response<List<{{singleClass.className}}>> queryByIds(@NotNull(message = "input.ids.empty") List<Long> ids);
+
+    Response<Paging<{{singleClass.className}}>> paging{{singleClass.className}}(Map<String, Object> criteria, Integer pageNo, Integer size)
+}

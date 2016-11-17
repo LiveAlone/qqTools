@@ -1,0 +1,81 @@
+{% if fieldNames contains "extra" %}
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Strings;
+import com.google.common.collect.Iterables;
+import io.terminus.common.utils.JsonMapper;
+import io.terminus.doctor.common.constants.JacksonType;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.SneakyThrows;
+{% endif %}
+import lombok.Data;
+import lombok.experimental.Builder;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.util.Date;
+{% if fieldNames contains "extra" %}
+import java.util.Collections;
+import java.util.Map;
+import java.util.Objects;
+import static java.util.Objects.isNull;
+{% endif %}
+
+/**
+ * Desc: {{singleClass.singleComment}} bean
+ * Mail: yaoqj@terminus.io
+ * author: yaoqijun
+ * Date: {{now()}}
+ */
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class {{singleClass.className}} implements Serializable{
+
+{% if fieldNames contains "extra"%}
+    private static final ObjectMapper OBJECT_MAPPER = JsonMapper.JSON_NON_DEFAULT_MAPPER.getMapper();
+{% endif %}
+
+{% for field in singleClass.fields %}
+{% if field.fieldName equals "extra" %}
+    @Setter(AccessLevel.NONE)
+    private Map<String, Object> extraMap;
+
+    @Setter(AccessLevel.NONE)
+    @JsonIgnore
+    private String extra;
+
+{% else %}
+{%if (field.fieldComment is not null) and (field.fieldComment is not empty) %}
+    // {{field.fieldComment}}
+{% endif %}
+    private {{field.fieldType}} {{field.fieldName}};
+
+{% endif %}
+{% endfor %}
+{% if fieldNames contains "extra"%}
+    @SneakyThrows
+    public void setExtraMap(Map<String,Object> extraMap){
+        this.extraMap = extraMap;
+        if(isNull(extraMap) || Iterables.isEmpty(extraMap.entrySet())){
+            this.extra = "";
+        }else {
+            this.extra = OBJECT_MAPPER.writeValueAsString(extraMap);
+        }
+    }
+
+    @SneakyThrows
+    public void setExtra(String extra){
+        this.extra = extra;
+        if(Strings.isNullOrEmpty(extra)){
+            this.extraMap = Collections.emptyMap();
+        }else {
+            this.extraMap = OBJECT_MAPPER.readValue(extra, JacksonType.MAP_OF_OBJECT);
+        }
+    }
+{% endif %}
+}

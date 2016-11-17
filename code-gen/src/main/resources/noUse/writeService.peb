@@ -1,0 +1,20 @@
+
+import io.terminus.common.model.Response;
+
+import javax.validation.constraints.NotNull;
+
+/**
+ * Desc: {{singleClass.singleComment}} service
+ * Mail: yaoqj@terminus.io
+ * author: yaoqijun
+ * Date: {{now()}}
+ */
+public interface {{singleClass.className}}WriteService {
+
+    Response<Boolean> deleteById(@NotNull(message = "input.id.empty") Long id);
+
+    Response<Boolean> create{{singleClass.className}}(@NotNull(message = "input.pigDoctor.empty") {{singleClass.className}} {{singleClass.lowClassName}});
+
+    Response<Boolean> update{{singleClass.className}}(@NotNull(message = "input.pigDoctor.empty") {{singleClass.className}} {{singleClass.lowClassName}});
+
+}

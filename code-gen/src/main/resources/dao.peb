@@ -1,0 +1,21 @@
+
+import java.util.List;
+
+/**
+ * Desc: {{singleClass.singleComment}} Mapper
+ * author: yaoqijun
+ * Date: {{now()}}
+ */
+public interface {{singleClass.className}}Mapper {
+
+    void create({{singleClass.className}} record);
+
+    void creates(List<{{singleClass.className}}> list);
+
+    void delete(Long id);
+
+    {{singleClass.className}} findById(Long id);
+
+    List<{{singleClass.className}}> findByIds(List<Long> ids);
+
+}

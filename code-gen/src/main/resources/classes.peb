@@ -1,0 +1,27 @@
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * Desc: {{singleClass.singleComment}} bean
+ * author: yaoqijun
+ * Date: {{now()}}
+ */
+public class {{singleClass.className}} implements Serializable{
+
+{% for field in singleClass.fields %}
+{%if (field.fieldComment is not null) and (field.fieldComment is not empty) %}
+    // {{field.fieldComment}}
+{% endif %}
+    private {{field.fieldType}} {{field.fieldName}};
+
+{% endfor %}
+{% for field in singleClass.fields %}
+    public {{field.fieldType}} get{{field.fieldMethodName}}() {
+        return {{field.fieldName}};
+    }
+
+    public void set{{field.fieldMethodName}}({{field.fieldType}} {{field.fieldName}}) {
+        this.{{field.fieldName}} = {{field.fieldName}};
+    }
+{% endfor %}
+}
