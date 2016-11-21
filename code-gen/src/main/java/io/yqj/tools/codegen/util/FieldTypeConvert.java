@@ -32,7 +32,7 @@ public class FieldTypeConvert {
         if(lowJdbcType.contains("varchar") || lowJdbcType.contains("text")){
             return "String";
         }
-        if(lowJdbcType.contains("date")){
+        if(lowJdbcType.contains("date") || lowJdbcType.contains("timestamp")){
             return "Date";
         }
         if(lowJdbcType.contains("double") || lowJdbcType.contains("float")){
@@ -61,7 +61,7 @@ public class FieldTypeConvert {
         if(lowJdbcType.contains("varchar") || lowJdbcType.contains("text")){
             return "VARCHAR";
         }
-        if(lowJdbcType.contains("date")){
+        if(lowJdbcType.contains("date") || lowJdbcType.contains("timestamp")){
             return "DATETIME";
         }
         if(lowJdbcType.contains("float")){

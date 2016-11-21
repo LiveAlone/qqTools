@@ -8,7 +8,12 @@
 
 使用方式:
 
-* 用户选择生成方式 用户指定Datasource 方式, 
+* application.yml 配置对应的数据源
+    ```
+        配置对应的 datasource , ignoreField 配置
+    ```
+
+* 进入 code-gen 目录内, 指定tableName 配置方式 
     ```
         mvn spring-boot:run -Drun.arguments='tableName1, tableName2 .....'  
     ```

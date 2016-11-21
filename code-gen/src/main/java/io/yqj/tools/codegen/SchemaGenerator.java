@@ -68,8 +68,6 @@ public class SchemaGenerator implements CommandLineRunner {
         }
 
 
-//        singleClasses.forEach(System.out::println);
-
         singleClasses.forEach(s -> fromDatasource(s));
 
         System.out.println("finish test condition");

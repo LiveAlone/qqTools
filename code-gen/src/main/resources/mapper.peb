@@ -42,12 +42,14 @@
     <delete id="delete" parameterType="Long">
         DELETE FROM <include refid="tb"/> WHERE
         {{ singleClass.fields[0].columnName }}={{wrap(singleClass.fields[0].fieldName)}}
+
     </delete>
 
     <select id="findById" parameterType="long" resultMap="{{singleClass.className}}Map" >
         SELECT <include refid="cols_all" />
         FROM <include refid="tb" />
         WHERE {{ singleClass.fields[0].columnName }}={{wrap(singleClass.fields[0].fieldName)}}
+
     </select>
 
     <select id="findByIds" parameterType="list" resultMap="{{singleClass.className}}Map" >

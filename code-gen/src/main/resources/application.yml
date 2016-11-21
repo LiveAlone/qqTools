@@ -1,0 +1,8 @@
+spring:
+    datasource:
+        url:  jdbc:mysql://127.0.0.1:3306/test_personal
+        username: root
+        password: anywhere
+        driver-class-name:  com.mysql.jdbc.Driver
+
+ignoreFields: id,test
