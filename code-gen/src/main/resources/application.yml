@@ -5,4 +5,4 @@ spring:
         password: anywhere
         driver-class-name:  com.mysql.jdbc.Driver
 
-ignoreFields: id,test
+ignoreFields: id,is_deleted,create_time,last_update_time

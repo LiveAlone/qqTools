@@ -83,11 +83,13 @@ public class SchemaGenerator implements CommandLineRunner {
         toClass(context, singleClass);
 
         toMapper(context, singleClass);
-//
+
         toDao(context, singleClass);
 
+        // TODO 对应的 Service 配置方式
 //        toReadService(context, singleClass);
 
+        // TODO  对应的 Service Impl 路径配置方式
 //        toReadServiceImpl(context, singleClass);
     }
 
@@ -96,7 +98,7 @@ public class SchemaGenerator implements CommandLineRunner {
             StringWriter stringWriter = new StringWriter(8196);
             PebbleTemplate mapperTemplate = pebbler.compile("mapper.peb");
             mapperTemplate.evaluate(stringWriter, context);
-            File targetFile = new File("sql/" + singleClass.getLowClassName() + "Mapper.xml");
+            File targetFile = new File("sql/" + singleClass.getClassName() + "Mapper.xml");
             Files.createParentDirs(targetFile);
             Files.write(stringWriter.toString(), targetFile, Charsets.UTF_8);
         }catch (Exception e){

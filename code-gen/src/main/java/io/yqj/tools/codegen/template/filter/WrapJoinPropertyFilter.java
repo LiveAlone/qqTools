@@ -24,7 +24,7 @@ public class WrapJoinPropertyFilter implements Filter {
         String glue = ",";
         boolean isFirst = true;
 
-        for(int i=1; i<fields.size(); i++){
+        for(int i=0; i<fields.size(); i++){
             String entry = fields.get(i).getFieldName();
             if(!isFirst){
                 builder.append(glue);
@@ -35,6 +35,9 @@ public class WrapJoinPropertyFilter implements Filter {
 
             isFirst = false;
         }
+
+        // add 0, now() 对应的 isDelete createTime
+        builder.append(glue).append("0").append(glue).append("now()");
         builder.append("\n");
         return builder.toString();
     }

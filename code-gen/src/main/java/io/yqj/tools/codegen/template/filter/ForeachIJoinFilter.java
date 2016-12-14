@@ -25,7 +25,7 @@ public class ForeachIJoinFilter implements Filter {
         String glue = ",";
         boolean isFirst = true;
 
-        for(int i=1; i<fields.size(); i++){
+        for(int i=0; i<fields.size(); i++){
             String entry = fields.get(i).getFieldName();
             if(!isFirst){
                 builder.append(glue);

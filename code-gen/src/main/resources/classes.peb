@@ -1,4 +1,3 @@
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -6,7 +5,9 @@ import java.util.Date;
  * author: yaoqijun
  * Date: {{now()}}
  */
-public class {{singleClass.className}} implements Serializable{
+public class {{singleClass.className}}{
+
+    private Long id;
 
 {% for field in singleClass.fields %}
 {%if (field.fieldComment is not null) and (field.fieldComment is not empty) %}
@@ -15,6 +16,19 @@ public class {{singleClass.className}} implements Serializable{
     private {{field.fieldType}} {{field.fieldName}};
 
 {% endfor %}
+    private Boolean isDeleted;
+
+    private Date createTime;
+
+    private Date lastUpdateTime;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 {% for field in singleClass.fields %}
     public {{field.fieldType}} get{{field.fieldMethodName}}() {
         return {{field.fieldName}};
@@ -25,4 +39,27 @@ public class {{singleClass.className}} implements Serializable{
     }
 
 {% endfor %}
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(Date lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
+    }
 }

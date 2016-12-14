@@ -35,7 +35,7 @@ public class FieldTypeConvert {
         if(lowJdbcType.contains("date") || lowJdbcType.contains("timestamp")){
             return "Date";
         }
-        if(lowJdbcType.contains("double") || lowJdbcType.contains("float")){
+        if(lowJdbcType.contains("double") || lowJdbcType.contains("float")||lowJdbcType.contains("decimal")){
             return "Double";
         }
         log.error("jdbc type convert error !! jdbcType:{}", jdbcType);

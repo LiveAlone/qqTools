@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="{{singleClass.className}}MapperPath">
+<mapper namespace="TODO{{singleClass.className}}MapperPath">
 
-    <resultMap id="{{singleClass.className}}Map" type="{{singleClass.className}}BeanPath">
+    <resultMap id="{{singleClass.className}}Map" type="TODO{{singleClass.className}}BeanPath">
         <id column="id" property="id" jdbcType="BIGINT" />
 {% for field in singleClass.fields %}
         <result column="{{field.columnName}}" property="{{field.fieldName}}" jdbcType="{{field.columnMapperType}}"/>
 {% endfor %}
+        <result column="is_deleted" property="isDeleted" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="DATE"/>
+        <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="tb"> {{singleClass.tableName}} </sql>
 
     <sql id="cols_all">
-        {{ singleClass.fields[0].columnName }}, <include refid="cols_exclude_id" />
+        `id`, <include refid="cols_exclude_id" />, `last_update_time`
     </sql>
 
     <sql id="cols_exclude_id">
@@ -24,7 +27,7 @@
         {{ singleClass.fields | wrapJoin }}
     </sql>
 
-    <insert id="create" parameterType="{{singleClass.className}}" keyProperty="id" useGeneratedKeys="true">
+    <insert id="create" parameterType="TODO{{singleClass.className}}ClassTypePath" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO <include refid="tb" />
         (<include refid="cols_exclude_id" />)
             VALUES (<include refid="vals" />)
@@ -39,23 +42,23 @@
         </foreach>
     </insert>
 
-    <delete id="delete" parameterType="Long">
-        DELETE FROM <include refid="tb"/> WHERE
-        {{ singleClass.fields[0].columnName }}={{wrap(singleClass.fields[0].fieldName)}}
-
-    </delete>
+    <update id="delete" parameterType="Long">
+        UPDATE <include refid="tb"/> SET
+        is_deleted = 1
+        where id = #{id}
+    </update>
 
     <select id="findById" parameterType="long" resultMap="{{singleClass.className}}Map" >
         SELECT <include refid="cols_all" />
         FROM <include refid="tb" />
-        WHERE {{ singleClass.fields[0].columnName }}={{wrap(singleClass.fields[0].fieldName)}}
+        WHERE id = #{id}
 
     </select>
 
     <select id="findByIds" parameterType="list" resultMap="{{singleClass.className}}Map" >
         SELECT <include refid="cols_all" />
         FROM <include refid="tb" />
-        WHERE {{ singleClass.fields[0].columnName }} in
+        WHERE id in
         <foreach collection="list" close=")" open="(" separator="," item="i">
             #{i}
         </foreach>

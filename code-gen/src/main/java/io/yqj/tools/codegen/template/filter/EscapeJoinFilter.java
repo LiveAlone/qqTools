@@ -25,7 +25,7 @@ public class EscapeJoinFilter implements Filter {
         boolean isFirst = true;
 
         // 默认跳过第一个字段信息
-        for (int i=1; i<fields.size(); i++){
+        for (int i=0; i<fields.size(); i++){
             Field currentField = fields.get(i);
 
             if(!isFirst){
@@ -36,6 +36,10 @@ public class EscapeJoinFilter implements Filter {
 
             isFirst = false;
         }
+
+        // add is_delete create_time filed content
+        builder.append(glue).append("`").append("is_deleted").append("`")
+                .append(glue).append("`").append("create_time").append("`");
         builder.append("\n");
         return builder.toString();
     }
