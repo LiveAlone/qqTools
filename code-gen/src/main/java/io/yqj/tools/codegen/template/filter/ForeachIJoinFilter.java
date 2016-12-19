@@ -31,7 +31,7 @@ public class ForeachIJoinFilter implements Filter {
                 builder.append(glue);
             }
 
-            builder.append("#{i.").append(entry).append(" jdbcType=")
+            builder.append("#{i.").append(entry).append(", jdbcType=")
                     .append(fields.get(i).getColumnMapperType()).append("}");
             isFirst = false;
         }
