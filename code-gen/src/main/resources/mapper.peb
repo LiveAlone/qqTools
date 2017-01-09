@@ -9,7 +9,7 @@
         <result column="{{field.columnName}}" property="{{field.fieldName}}" jdbcType="{{field.columnMapperType}}"/>
 {% endfor %}
         <result column="is_deleted" property="isDeleted" jdbcType="TINYINT"/>
-        <result column="create_time" property="createTime" jdbcType="DATE"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="last_update_time" property="lastUpdateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
@@ -51,14 +51,14 @@
     <select id="findById" parameterType="long" resultMap="{{singleClass.className}}Map" >
         SELECT <include refid="cols_all" />
         FROM <include refid="tb" />
-        WHERE id = #{id}
+        WHERE id = #{id} and is_deleted = 0
 
     </select>
 
     <select id="findByIds" parameterType="list" resultMap="{{singleClass.className}}Map" >
         SELECT <include refid="cols_all" />
         FROM <include refid="tb" />
-        WHERE id in
+        WHERE is_deleted = 0 and id in
         <foreach collection="list" close=")" open="(" separator="," item="i">
             #{i}
         </foreach>
