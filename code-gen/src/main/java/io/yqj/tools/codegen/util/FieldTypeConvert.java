@@ -13,6 +13,27 @@ import java.util.Date;
 @Slf4j
 public class FieldTypeConvert {
 
+    public static Class fieldTypeToClassType(String fieldType){
+        String fieldTypeLow = fieldType.toLowerCase();
+        if (fieldTypeLow.contains("long")){
+            return Long.class;
+        }
+        if (fieldTypeLow.contains("integer")){
+            return Integer.class;
+        }
+        if (fieldTypeLow.contains("string")){
+            return String.class;
+        }
+        if (fieldTypeLow.contains("date")){
+            return Date.class;
+        }
+        if (fieldTypeLow.contains("double")){
+            return Double.class;
+        }
+        log.error("field type to Class type error, fieldType:{}", fieldType);
+        return null;
+    }
+
     /**
      * sql 字段转换 Class 字段
      * @param fieldType

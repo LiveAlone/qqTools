@@ -20,3 +20,7 @@
     ```
         mvn spring-boot:run -Drun.arguments='tableName1, tableName2 .....'  
     ```
+
+
+> 2017.3.18 添加生成对应的测试代码的配置模板, Bean 数据的随机生成的配置方式。
+> 添加 Bean 数据的随机生成配制方式

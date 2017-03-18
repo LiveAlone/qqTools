@@ -38,20 +38,24 @@ public class Field implements Serializable{
 
     private String fieldComment;    // 对应的该列的注解信息
 
+    private Class classType;
+
     public static Field fromClassType(String fieldName, Class fieldType, String fieldComment){
-        return Field.builder()
+        Field field = Field.builder()
                 .fieldName(fieldName)
                 .fieldMethodName(StringConvert.classFieldToClassMethod(fieldName))
                 .fieldType(fieldType.getSimpleName())
                 .columnName(StringConvert.classFieldToTableColumn(fieldName))
                 .columnType(FieldTypeConvert.fieldTypeToColumnType(fieldType))
                 .columnMapperType(FieldTypeConvert.fieldTypeToColumnMapperType(fieldType))
-                .fieldComment(commentConvert(fieldComment))
-                .build();
+                .fieldComment(commentConvert(fieldComment)).build();
+
+        field.setClassType(FieldTypeConvert.fieldTypeToClassType(field.getFieldType()));
+        return field;
     }
 
     public static Field fromColumnType(String columnName, String columnType, String fieldComment){
-        return Field.builder()
+          Field field = Field.builder()
                 .fieldName(StringConvert.tableColumnToClassField(columnName))
                 .fieldMethodName(StringConvert.tableColumnToMethodName(columnName))
                 .fieldType(FieldTypeConvert.columnTypeToFieldType(columnType))
@@ -59,6 +63,8 @@ public class Field implements Serializable{
                 .columnName(columnName).columnType(columnType)
                 .fieldComment(commentConvert(fieldComment))
                 .build();
+          field.setClassType(FieldTypeConvert.fieldTypeToClassType(field.getFieldType()));
+          return field;
     }
 
     private static String commentConvert(String comment){
@@ -77,7 +83,9 @@ public class Field implements Serializable{
                 ", fieldType='" + fieldType + '\'' +
                 ", columnName='" + columnName + '\'' +
                 ", columnType='" + columnType + '\'' +
+                ", columnMapperType='" + columnMapperType + '\'' +
                 ", fieldComment='" + fieldComment + '\'' +
+                ", classType=" + classType +
                 '}';
     }
 }

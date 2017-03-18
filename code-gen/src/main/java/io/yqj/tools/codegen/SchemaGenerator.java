@@ -9,8 +9,10 @@ import com.mitchellbosecke.pebble.template.PebbleTemplate;
 import io.yqj.tools.codegen.component.InspectFieldFromBeans;
 import io.yqj.tools.codegen.component.InspectFieldFromDatasource;
 import io.yqj.tools.codegen.model.Field;
+import io.yqj.tools.codegen.model.RandomObject;
 import io.yqj.tools.codegen.model.SingleClass;
 import io.yqj.tools.codegen.template.Pebbler;
+import io.yqj.tools.codegen.util.RandomObjectUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -91,6 +93,21 @@ public class SchemaGenerator implements CommandLineRunner {
 
         // TODO  对应的 Service Impl 路径配置方式
 //        toReadServiceImpl(context, singleClass);
+
+        // TODO add
+        toTextXmlContent(singleClass);
+    }
+
+    // 生成测试 Dao
+    private void toTestDao(){
+
+    }
+
+    // 生成测试Xml
+    private void toTextXmlContent(SingleClass singleClass){
+        // todo add
+        List<RandomObject> randomObjects = RandomObjectUtil.toRandomObject(singleClass.getFields(), 2);
+        System.out.println(randomObjects);
     }
 
     private void toMapper(Map<String,Object> context, SingleClass singleClass) {
