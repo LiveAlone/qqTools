@@ -95,7 +95,7 @@ public class SchemaGenerator implements CommandLineRunner {
 //        toReadServiceImpl(context, singleClass);
 
         // TODO add
-        toTextXmlContent(singleClass);
+//        toTextXmlContent(singleClass);
     }
 
     // 生成测试 Dao

@@ -26,3 +26,6 @@ dependency-reduced-pom.xml
 log/
 
 *.perm
+javaCode/
+mapper/
+sql/

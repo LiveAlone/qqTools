@@ -50,7 +50,7 @@ public class FieldTypeConvert {
             return "Integer";
         }
 
-        if(lowJdbcType.contains("varchar") || lowJdbcType.contains("text")){
+        if(lowJdbcType.contains("varchar") || lowJdbcType.contains("text") || lowJdbcType.contains("char")){
             return "String";
         }
         if(lowJdbcType.contains("date") || lowJdbcType.contains("timestamp")){
