@@ -9,6 +9,7 @@ import com.mitchellbosecke.pebble.template.PebbleTemplate;
 import io.yqj.tools.codegen.component.InspectFieldFromBeans;
 import io.yqj.tools.codegen.component.InspectFieldFromDatasource;
 import io.yqj.tools.codegen.model.Field;
+import io.yqj.tools.codegen.model.RandomListObject;
 import io.yqj.tools.codegen.model.RandomObject;
 import io.yqj.tools.codegen.model.SingleClass;
 import io.yqj.tools.codegen.template.Pebbler;
@@ -82,32 +83,46 @@ public class SchemaGenerator implements CommandLineRunner {
         context.put("singleClass", singleClass);
         context.put("fieldNames",singleClass.queryFieldName());
 
-        toClass(context, singleClass);
+//        toClass(context, singleClass);
 
-        toMapper(context, singleClass);
+//        toMapper(context, singleClass);
 
-        toDao(context, singleClass);
+//        toDao(context, singleClass);
 
-        // TODO 对应的 Service 配置方式
 //        toReadService(context, singleClass);
 
-        // TODO  对应的 Service Impl 路径配置方式
 //        toReadServiceImpl(context, singleClass);
 
-        // TODO add
-//        toTextXmlContent(singleClass);
+        generateTestXmlCondition(context, singleClass);
+
+        List<RandomListObject> randomListObjects = toRandomListObjects(singleClass.getFields(), 10);
+
+        System.out.println(randomListObjects.get(0));
+    }
+
+    public List<RandomListObject> toRandomListObjects(List<Field> fields, int size){
+        return RandomObjectUtil.toRandomListObject(fields, size);
+    }
+
+    // 生成对应的测试文件的 Xml 文件夹内容D
+    public void generateTestXmlCondition(Map<String, Object> context, SingleClass singleClass){
+        try {
+            StringWriter stringWriter = new StringWriter(8196);
+            PebbleTemplate emptyXmlTest = pebbler.compile("testEmptyXml.peb");
+            emptyXmlTest.evaluate(stringWriter, context);
+            File targetTestXmlFile = new File("test/xml/"+singleClass.getClassName()+"MapperTest-empty.xml");
+            Files.createParentDirs(targetTestXmlFile);
+            Files.write(stringWriter.toString(), targetTestXmlFile, Charsets.UTF_8);
+
+        }catch (Exception e){
+            System.out.println("generate test xml fail cause:{}" + e.toString());
+        }
+
     }
 
     // 生成测试 Dao
     private void toTestDao(){
 
-    }
-
-    // 生成测试Xml
-    private void toTextXmlContent(SingleClass singleClass){
-        // todo add
-        List<RandomObject> randomObjects = RandomObjectUtil.toRandomObject(singleClass.getFields(), 2);
-        System.out.println(randomObjects);
     }
 
     private void toMapper(Map<String,Object> context, SingleClass singleClass) {

@@ -2,6 +2,7 @@ package io.yqj.tools.codegen.util;
 
 import com.google.common.collect.Lists;
 import io.yqj.tools.codegen.model.Field;
+import io.yqj.tools.codegen.model.RandomListObject;
 import io.yqj.tools.codegen.model.RandomObject;
 import io.yqj.tools.codegen.randomvalue.RandomObjectManager;
 
@@ -23,6 +24,19 @@ public class RandomObjectUtil {
                 randomObject.put(field.getFieldName(), randomObjectManager.randomValue(field.getClassType()));
             }
             result.add(randomObject);
+        }
+        return result;
+    }
+
+    public static List<RandomListObject> toRandomListObject(List<Field> fields, int size){
+        List<RandomListObject> result = new ArrayList<>(size);
+        RandomObjectManager randomObjectManager = new RandomObjectManager();
+        for (int i=0; i<size; i++){
+            RandomListObject randomFields = new RandomListObject(fields.size());
+            for (Field field : fields) {
+                randomFields.add(field.getFieldName(), randomObjectManager.randomValue(field.getClassType()));
+            }
+            result.add(randomFields);
         }
         return result;
     }

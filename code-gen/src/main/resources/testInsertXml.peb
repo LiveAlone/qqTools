@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset xmlns="qq_data">
+    <{{singleClass.tableName}}
+            order_course_id ="3"
+            teacher_id="1"
+            student_id="2"
+            student_appraise_time="2017-03-19 02:03:02"
+            quality_of_course="7"
+            quality_of_service="9"
+            quality_of_effect="8"
+            effect_time="2017-03-22 04:05:06"
+            phrase_ids="1,2"
+            is_selection="1"
+            grade_id="2"
+            course_id="1"
+            teacher_appraise_time="2017-03-20 01:01:02"
+            from_new="1"
+            violate_service_principle_ids="3,4"
+            violate_service_principle_reason="棒棒的"
+            is_auto_comment="0"
+
+    />
+</dataset>
