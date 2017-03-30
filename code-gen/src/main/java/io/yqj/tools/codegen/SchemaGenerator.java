@@ -15,6 +15,7 @@ import io.yqj.tools.codegen.model.SingleClass;
 import io.yqj.tools.codegen.template.Pebbler;
 import io.yqj.tools.codegen.util.RandomObjectUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,7 @@ import java.io.File;
 import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Author:  <a href="mailto:i@terminus.io">jlchen</a>
@@ -38,25 +40,22 @@ public class SchemaGenerator implements CommandLineRunner {
 
     private final InspectFieldFromBeans inspectFieldFromBeans;
 
+    private final MyConfiguration myConfiguration;
+
     List<String> tables = null;
 
     @Autowired
-    public SchemaGenerator(Pebbler pebbler,
+    public SchemaGenerator(Pebbler pebbler, MyConfiguration myConfiguration,
                            InspectFieldFromDatasource inspectFieldFromDatasource,
                            InspectFieldFromBeans inspectFieldFromBeans) {
         this.pebbler = pebbler;
         this.inspectFieldFromDatasource = inspectFieldFromDatasource;
         this.inspectFieldFromBeans = inspectFieldFromBeans;
+        this.myConfiguration = myConfiguration;
         tables = Lists.newArrayList();
     }
 
     public void run(String... args) throws Exception {
-
-        System.out.println("start test condition");
-
-        /**
-         * 添加Table 表名称
-         */
         if( args != null && args.length != 0){
             for (String arg : args) {
                 tables.add(arg);
@@ -66,15 +65,7 @@ public class SchemaGenerator implements CommandLineRunner {
         // 获取对应的数据表的信息
         List<SingleClass> singleClasses = inspectFieldFromDatasource.queryInspectFields(tables);
 
-        for (SingleClass singleClass : singleClasses) {
-            fromDatasource(singleClass);
-        }
-
-
         singleClasses.forEach(s -> fromDatasource(s));
-
-        System.out.println("finish test condition");
-
     }
 
     private void fromDatasource(SingleClass singleClass) {
@@ -82,6 +73,7 @@ public class SchemaGenerator implements CommandLineRunner {
         Map<String, Object> context = Maps.newHashMap();
         context.put("singleClass", singleClass);
         context.put("fieldNames",singleClass.queryFieldName());
+        context.put("databaseName", myConfiguration.getDatabaseName());
 
 //        toClass(context, singleClass);
 
@@ -93,19 +85,35 @@ public class SchemaGenerator implements CommandLineRunner {
 
 //        toReadServiceImpl(context, singleClass);
 
-        generateTestXmlCondition(context, singleClass);
+        generateTestEmptyXmlCondition(context, singleClass);
 
         List<RandomListObject> randomListObjects = toRandomListObjects(singleClass.getFields(), 10);
 
-        System.out.println(randomListObjects.get(0));
+        context.put("insertListObject", randomListObjects.get(0));
+
+        generateTestExceptXmlCondition(context, singleClass);
+
     }
 
     public List<RandomListObject> toRandomListObjects(List<Field> fields, int size){
         return RandomObjectUtil.toRandomListObject(fields, size);
     }
 
-    // 生成对应的测试文件的 Xml 文件夹内容D
-    public void generateTestXmlCondition(Map<String, Object> context, SingleClass singleClass){
+    public void generateTestExceptXmlCondition(Map<String, Object> context, SingleClass singleClass){
+        try {
+            StringWriter stringWriter = new StringWriter(8196);
+            PebbleTemplate emptyXmlTest = pebbler.compile("testInsertXml.peb");
+            emptyXmlTest.evaluate(stringWriter, context);
+            File targetTestXmlFile = new File("test/xml/"+singleClass.getClassName()+"MapperTest-testInsert-expected.xml");
+            Files.createParentDirs(targetTestXmlFile);
+            Files.write(stringWriter.toString(), targetTestXmlFile, Charsets.UTF_8);
+        }catch (Exception e){
+            System.out.println("generate test except xml fail cause:" + e.toString());
+        }
+    }
+
+    // 生成对应的测试文件的 Xml empty文件内容
+    public void generateTestEmptyXmlCondition(Map<String, Object> context, SingleClass singleClass){
         try {
             StringWriter stringWriter = new StringWriter(8196);
             PebbleTemplate emptyXmlTest = pebbler.compile("testEmptyXml.peb");
@@ -113,7 +121,6 @@ public class SchemaGenerator implements CommandLineRunner {
             File targetTestXmlFile = new File("test/xml/"+singleClass.getClassName()+"MapperTest-empty.xml");
             Files.createParentDirs(targetTestXmlFile);
             Files.write(stringWriter.toString(), targetTestXmlFile, Charsets.UTF_8);
-
         }catch (Exception e){
             System.out.println("generate test xml fail cause:{}" + e.toString());
         }

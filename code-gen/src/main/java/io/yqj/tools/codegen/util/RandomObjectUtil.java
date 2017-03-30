@@ -21,7 +21,7 @@ public class RandomObjectUtil {
         for (int i=0; i<size; i++){
             RandomObject randomObject = new RandomObject(fields.size());
             for (Field field : fields) {
-                randomObject.put(field.getFieldName(), randomObjectManager.randomValue(field.getClassType()));
+                randomObject.put(field.getColumnName(), randomObjectManager.randomValue(field.getClassType()));
             }
             result.add(randomObject);
         }
@@ -34,7 +34,7 @@ public class RandomObjectUtil {
         for (int i=0; i<size; i++){
             RandomListObject randomFields = new RandomListObject(fields.size());
             for (Field field : fields) {
-                randomFields.add(field.getFieldName(), randomObjectManager.randomValue(field.getClassType()));
+                randomFields.add(field.getColumnName(), randomObjectManager.randomValue(field.getClassType()));
             }
             result.add(randomFields);
         }

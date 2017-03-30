@@ -13,13 +13,13 @@ public class RandomListObject extends ArrayList<RandomListObject.RandomField>{
     }
 
     // 添加 RandomListField
-    public void add(String key, Object value){
+    public void add(String key, String value){
         this.add(new RandomField(key, value));
     }
 
     public static class RandomField{
 
-        public RandomField(String key, Object value) {
+        public RandomField(String key, String value) {
             this.key = key;
             this.value = value;
         }
@@ -29,7 +29,7 @@ public class RandomListObject extends ArrayList<RandomListObject.RandomField>{
 
         String key;
 
-        Object value;
+        String value;
 
         public String getKey() {
             return key;
@@ -39,11 +39,11 @@ public class RandomListObject extends ArrayList<RandomListObject.RandomField>{
             this.key = key;
         }
 
-        public Object getValue() {
+        public String getValue() {
             return value;
         }
 
-        public void setValue(Object value) {
+        public void setValue(String value) {
             this.value = value;
         }
 
@@ -51,7 +51,7 @@ public class RandomListObject extends ArrayList<RandomListObject.RandomField>{
         public String toString() {
             return "RandomField{" +
                     "key='" + key + '\'' +
-                    ", value=" + value +
+                    ", value='" + value + '\'' +
                     '}';
         }
     }

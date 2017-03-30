@@ -44,7 +44,7 @@ public class RandomManager<T> {
         return new RandomManager<T>(RANDOM_TIMES);
     }
 
-    public T randomValue(T range){
+    public  String randomValue(T range){
         if (range == null){
             logger.error("range not allow null");
             throw new IllegalArgumentException("range argument null");
@@ -57,7 +57,7 @@ public class RandomManager<T> {
         for (int i=1; i<randomTimes; i++){
             T value = (T)valueTypeMap.get(range.getClass()).random(range);
             if (!randomValues.contains(value)){
-                return value;
+                return RandomFormatter.formatter(value);
             }
         }
 
