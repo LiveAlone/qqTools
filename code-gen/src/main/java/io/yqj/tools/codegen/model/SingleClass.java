@@ -14,7 +14,7 @@ import java.util.List;
  * Created by yaoqijun.
  * Date:2016-05-21
  * Email:yaoqj@terminus.io
- * Descirbe: 当前实体类的Demon模式内容设计方式
+ * Descirbe: 当前实体类的Demon模式内容设计方式.
  */
 @Builder
 @Data
