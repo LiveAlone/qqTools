@@ -14,9 +14,13 @@ public class RandomFormatter {
 
     private static DateTimeFormatter TIME = DateTimeFormat.forPattern("YYYY-MM-DD HH:mm:ss");
 
+    private static final String datatimeFormatterString = "JodaTimeUtil.stringToDate(\"%s\", JodaTimeUtil.DEFAULT_TIME_FORMAT)";
+
     public static String formatter(Object o){
         if (o instanceof Date){
             return dateFormatter(o);
+        }else if (o instanceof String){
+            return stringToFormatter(o);
         }else {
             return toStringFormatter(o);
         }
@@ -28,7 +32,14 @@ public class RandomFormatter {
 
     private static String dateFormatter(Object o){
         if (o instanceof Date){
-            return new DateTime(o).toString(TIME);
+            return String.format(datatimeFormatterString, new DateTime(o).toString(TIME));
+        }
+        return o.toString();
+    }
+
+    private static String stringToFormatter(Object o){
+        if (o instanceof String){
+            return "\"" + o.toString() + "\"";
         }
         return o.toString();
     }

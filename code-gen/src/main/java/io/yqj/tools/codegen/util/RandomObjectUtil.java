@@ -34,7 +34,7 @@ public class RandomObjectUtil {
         for (int i=0; i<size; i++){
             RandomListObject randomFields = new RandomListObject(fields.size());
             for (Field field : fields) {
-                randomFields.add(field.getColumnName(), randomObjectManager.randomValue(field.getClassType()));
+                randomFields.add(field.getColumnName(), randomObjectManager.randomValue(field.getClassType()), field.getFieldMethodName());
             }
             result.add(randomFields);
         }

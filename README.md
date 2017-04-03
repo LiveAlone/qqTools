@@ -27,3 +27,5 @@
 
 ### 随机生成Test Bean 的配置方式
 随机生成 Bean 生成对应的 Class 校验对应的 CRUD 配置使用的方法。
+
+### TODO List Map 对应的类型的格式化方式

@@ -12,23 +12,52 @@ import org.junit.Test;
 import java.util.Date;
 import java.util.List;
 
+import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
+
 @Transactional(value = TransactionMode.ROLLBACK, transactionManagerName = ConfigInFile.TRANSACTION_MANAGER_DATA)
 public class {{singleClass.className}}MapperTest extends UnitilsDaoTestBase<{{singleClass.className}}> {
 
     private static final String PREFIX_URI = DATA_URI_PREFIX + "TODO appraise/{{singleClass.className}}Mapper/";
 
+    private List<{{singleClass.className}}> {{singleClass.lowClassName}}List = new ArrayList({{totalListObject.size}});
+
+	@SpringBeanByType
+	private {{singleClass.className}}Mapper {{singleClass.lowClassName}}Mapper;
+
     @Test
     @DataSet(value = PREFIX_URI + "{{singleClass.className}}MapperTest-empty.xml", loadStrategy = CleanInsertLoadStrategy.class)
     @ExpectedDataSet(value = PREFIX_URI + "{{singleClass.className}}MapperTest-testInsert-expected.xml", databaseName = "{{databaseName}}")
     public void testInsert() {
-        orderCourseAppraiseMapper.insert(buildDomain());
+        {{singleClass.lowClassName}}Mapper.create(buildDomain());
     }    
+
+    @Test
+    @DataSet(value = PREFIX_URI + "{{singleClass.className}}MapperTest-empty.xml", loadStrategy = CleanInsertLoadStrategy.class)
+    public void testFindById(){
+        preCreates();
+        {{singleClass.className}} {{singleClass.lowClassName}} = {{singleClass.lowClassName}}Mapper.findById({{singleClass.lowClassName}}List.getIndex(0).getId());
+        assertReflectionEquals({{singleClass.lowClassName}}List.getIndex(0), {{singleClass.lowClassName}}, ReflectionComparatorMode.IGNORE_DEFAULTS);
+    }
+
+
+    // 创建数据 Insert
+    private void preCreates(){
+{% for singleInsertListObject in totalListObject %}
+        {{singleClass.className}} {{singleClass.lowClassName}}{{loop.index}} = new {{singleClass.className}}();
+{% for insertListField in singleInsertListObject %}
+        {{singleClass.lowClassName}}.set{{insertListField.fieldMethodName}}({{insertListField.value | raw}});
+{% endfor %}
+        {{singleClass.lowClassName}}Mapper.create({{singleClass.lowClassName}}{{loop.index}});
+        {{singleClass.lowClassName}}List.add({{singleClass.lowClassName}}{{loop.index}});
+
+{% endfor %}
+    }
 
 	@Override
 	protected {{singleClass.className}} buildDomain() {
 		{{singleClass.className}} {{singleClass.lowClassName}} = new {{singleClass.className}}();
         {% for insertField in insertListObject %}
-        {{singleClass.lowClassName}}.set
+        {{singleClass.lowClassName}}.set{{insertField.fieldMethodName}}({{insertField.value | raw}});
         {% endfor %}
 		return {{singleClass.lowClassName}};
 	}
