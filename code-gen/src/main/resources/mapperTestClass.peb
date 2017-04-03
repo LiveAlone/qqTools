@@ -1,5 +1,16 @@
 
-
+import org.unitils.database.annotations.Transactional;
+import org.unitils.database.util.TransactionMode;
+import com.qingqing.api.constant.ConfigInFile;
+import org.unitils.dbunit.annotation.DataSet;
+import org.unitils.dbunit.annotation.ExpectedDataSet;
+import org.unitils.dbunit.datasetloadstrategy.impl.CleanInsertLoadStrategy;
+import org.unitils.reflectionassert.ReflectionComparatorMode;
+import org.unitils.spring.annotation.SpringBeanByType;
+import junit.framework.Assert;
+import org.junit.Test;
+import java.util.Date;
+import java.util.List;
 
 @Transactional(value = TransactionMode.ROLLBACK, transactionManagerName = ConfigInFile.TRANSACTION_MANAGER_DATA)
 public class {{singleClass.className}}MapperTest extends UnitilsDaoTestBase<{{singleClass.className}}> {
@@ -16,23 +27,9 @@ public class {{singleClass.className}}MapperTest extends UnitilsDaoTestBase<{{si
 	@Override
 	protected {{singleClass.className}} buildDomain() {
 		{{singleClass.className}} {{singleClass.lowClassName}} = new {{singleClass.className}}();
-		orderCourseAppraise.setOrderCourseId(defaultOrderCourseId);
-		orderCourseAppraise.setTeacherId(defaultTeacherId);
-		orderCourseAppraise.setStudentId(defaultStudentId);
-		orderCourseAppraise.setStudentAppraiseTime(JodaTimeUtil.stringToDate("2017-03-19 02:03:02", JodaTimeUtil.DEFAULT_TIME_FORMAT));
-		orderCourseAppraise.setQualityOfCourse(7);
-		orderCourseAppraise.setQualityOfService(9);
-		orderCourseAppraise.setQualityOfEffect(8);
-		orderCourseAppraise.setEffectTime(JodaTimeUtil.stringToDate("2017-03-22 04:05:06", JodaTimeUtil.DEFAULT_TIME_FORMAT));
-		orderCourseAppraise.setPhraseIds(Arrays.asList(1L,2L));
-		orderCourseAppraise.setIsSelection(true);
-		orderCourseAppraise.setGradeId(2);
-		orderCourseAppraise.setCourseId(1);
-		orderCourseAppraise.setTeacherAppraiseTime(JodaTimeUtil.stringToDate("2017-03-20 01:01:02", JodaTimeUtil.DEFAULT_TIME_FORMAT));
-		orderCourseAppraise.setFromNew(true);
-		orderCourseAppraise.setViolateServicePrincipleIds(Arrays.asList(3L,4L));
-		orderCourseAppraise.setViolateServicePrincipleReason("棒棒的");
-		orderCourseAppraise.setIsAutoComment(false);
+        {% for insertField in insertListObject %}
+        {{singleClass.lowClassName}}.set
+        {% endfor %}
 		return {{singleClass.lowClassName}};
 	}
 

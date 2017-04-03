@@ -6,6 +6,7 @@ import com.google.common.collect.Maps;
 import com.google.common.io.Files;
 import com.google.common.util.concurrent.ExecutionError;
 import com.mitchellbosecke.pebble.template.PebbleTemplate;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
 import io.yqj.tools.codegen.component.InspectFieldFromBeans;
 import io.yqj.tools.codegen.component.InspectFieldFromDatasource;
 import io.yqj.tools.codegen.model.Field;
@@ -85,14 +86,29 @@ public class SchemaGenerator implements CommandLineRunner {
 
 //        toReadServiceImpl(context, singleClass);
 
-        generateTestEmptyXmlCondition(context, singleClass);
+//        generateTestEmptyXmlCondition(context, singleClass);
 
-        List<RandomListObject> randomListObjects = toRandomListObjects(singleClass.getFields(), 10);
+        List<RandomListObject> randomListObjects = RandomObjectUtil.toRandomListObject(singleClass.getFields(),  10);
 
         context.put("insertListObject", randomListObjects.get(0));
+        context.put("totalListObject", randomListObjects);
 
-        generateTestExceptXmlCondition(context, singleClass);
+//        generateTestExceptXmlCondition(context, singleClass);
 
+        toRandomTestClass(context, singleClass);
+    }
+
+    private void toRandomTestClass(Map<String, Object> context, SingleClass singleClass){
+        try{
+            StringWriter stringWriter = new StringWriter(8196);
+            PebbleTemplate emptyXmlTest = pebbler.compile("mapperTestClass.peb");
+            emptyXmlTest.evaluate(stringWriter, context);
+            File targetTestXmlFile = new File("test/"+singleClass.getClassName()+"MapperTest.java");
+            Files.createParentDirs(targetTestXmlFile);
+            Files.write(stringWriter.toString(), targetTestXmlFile, Charsets.UTF_8);
+        }catch (Exception e){
+            System.out.println("generate test except class, cause:{}" + e.toString());
+        }
     }
 
     public List<RandomListObject> toRandomListObjects(List<Field> fields, int size){
@@ -124,12 +140,6 @@ public class SchemaGenerator implements CommandLineRunner {
         }catch (Exception e){
             System.out.println("generate test xml fail cause:{}" + e.toString());
         }
-
-    }
-
-    // 生成测试 Dao
-    private void toTestDao(){
-
     }
 
     private void toMapper(Map<String,Object> context, SingleClass singleClass) {
