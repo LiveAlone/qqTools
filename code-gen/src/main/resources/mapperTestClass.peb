@@ -45,7 +45,7 @@ public class {{singleClass.className}}MapperTest extends UnitilsDaoTestBase<{{si
 {% for singleInsertListObject in totalListObject %}
         {{singleClass.className}} {{singleClass.lowClassName}}{{loop.index}} = new {{singleClass.className}}();
 {% for insertListField in singleInsertListObject %}
-        {{singleClass.lowClassName}}.set{{insertListField.fieldMethodName}}({{insertListField.value | raw}});
+        {{singleClass.lowClassName}}.set{{insertListField.fieldMethodName}}({{insertListField.javaValueString | raw}});
 {% endfor %}
         {{singleClass.lowClassName}}Mapper.create({{singleClass.lowClassName}}{{loop.index}});
         {{singleClass.lowClassName}}List.add({{singleClass.lowClassName}}{{loop.index}});
@@ -57,7 +57,7 @@ public class {{singleClass.className}}MapperTest extends UnitilsDaoTestBase<{{si
 	protected {{singleClass.className}} buildDomain() {
 		{{singleClass.className}} {{singleClass.lowClassName}} = new {{singleClass.className}}();
         {% for insertField in insertListObject %}
-        {{singleClass.lowClassName}}.set{{insertField.fieldMethodName}}({{insertField.value | raw}});
+        {{singleClass.lowClassName}}.set{{insertField.fieldMethodName}}({{insertField.javaValueString | raw}});
         {% endfor %}
 		return {{singleClass.lowClassName}};
 	}

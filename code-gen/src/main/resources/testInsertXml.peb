@@ -3,7 +3,7 @@
     <{{singleClass.tableName}}
 
 {% for field in insertListObject %}
-        {{field.key}} = "{{field.value | raw}}"
+        {{field.key}} = "{{field.xmlValueString | raw}}"
 {% endfor %}
     />
 </dataset>

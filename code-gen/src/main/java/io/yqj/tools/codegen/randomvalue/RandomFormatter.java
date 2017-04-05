@@ -16,11 +16,19 @@ public class RandomFormatter {
 
     private static final String datatimeFormatterString = "JodaTimeUtil.stringToDate(\"%s\", JodaTimeUtil.DEFAULT_TIME_FORMAT)";
 
-    public static String formatter(Object o){
+    public static String formatterJavaType(Object o){
         if (o instanceof Date){
-            return dateFormatter(o);
+            return dateJavaFormatter((Date) o);
+        }else {
+            return toStringFormatter(o);
+        }
+    }
+
+    public static String formatterXmlType(Object o){
+        if (o instanceof Date){
+            return dateXmlFormatter((Date) o);
         }else if (o instanceof String){
-            return stringToFormatter(o);
+            return stringXmlFormatter(o);
         }else {
             return toStringFormatter(o);
         }
@@ -30,14 +38,15 @@ public class RandomFormatter {
         return o.toString();
     }
 
-    private static String dateFormatter(Object o){
-        if (o instanceof Date){
-            return String.format(datatimeFormatterString, new DateTime(o).toString(TIME));
-        }
-        return o.toString();
+    private static String dateXmlFormatter(Date o){
+        return String.format(datatimeFormatterString, new DateTime(o).toString(TIME));
     }
 
-    private static String stringToFormatter(Object o){
+    private static String dateJavaFormatter(Date o){
+        return new DateTime(o).toString(TIME);
+    }
+
+    private static String stringXmlFormatter(Object o){
         if (o instanceof String){
             return "\"" + o.toString() + "\"";
         }

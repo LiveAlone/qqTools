@@ -52,10 +52,10 @@ public class RandomObjectManager {
         randomManagerMap.put(Date.class, RandomManager.<Date>newInstance());
     }
 
-    public <T> String randomValue(Class<T> clz){
+    public <T> T randomValue(Class<T> clz){
 
         if (randomManagerMap.containsKey(clz)){
-            return randomManagerMap.get(clz).randomValue(getDefaultValue(clz));
+            return (T)randomManagerMap.get(clz).randomValue(getDefaultValue(clz));
         }else {
             logger.error("random class not found, clz is :{}", clz.getSimpleName());
             throw new IllegalStateException("randomClass.not.found");

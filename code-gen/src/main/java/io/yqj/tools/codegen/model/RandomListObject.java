@@ -13,15 +13,16 @@ public class RandomListObject extends ArrayList<RandomListObject.RandomField>{
     }
 
     // 添加 RandomListField
-    public void add(String key, String value, String fieldMethodName){
-        this.add(new RandomField(key, value, fieldMethodName));
+    public void add(String key, String xmlValueString, String javaValueString, String fieldMethodName){
+        this.add(new RandomField(key, xmlValueString, javaValueString, fieldMethodName));
     }
 
     public static class RandomField{
 
-        public RandomField(String key, String value, String fieldMethodName) {
+        public RandomField(String key, String xmlValueString, String javaValueString, String fieldMethodName) {
             this.key = key;
-            this.value = value;
+            this.xmlValueString = xmlValueString;
+            this.javaValueString = javaValueString;
             this.fieldMethodName = fieldMethodName;
         }
 
@@ -30,7 +31,9 @@ public class RandomListObject extends ArrayList<RandomListObject.RandomField>{
 
         String key;
 
-        String value;
+        String xmlValueString;  // xml 中数据 Value 数据的显示方式
+
+        String javaValueString; // java 数据中的 String 显示方式
 
         private String fieldMethodName;
 
@@ -42,12 +45,20 @@ public class RandomListObject extends ArrayList<RandomListObject.RandomField>{
             this.key = key;
         }
 
-        public String getValue() {
-            return value;
+        public String getXmlValueString() {
+            return xmlValueString;
         }
 
-        public void setValue(String value) {
-            this.value = value;
+        public void setXmlValueString(String xmlValueString) {
+            this.xmlValueString = xmlValueString;
+        }
+
+        public String getJavaValueString() {
+            return javaValueString;
+        }
+
+        public void setJavaValueString(String javaValueString) {
+            this.javaValueString = javaValueString;
         }
 
         public String getFieldMethodName() {
@@ -62,7 +73,8 @@ public class RandomListObject extends ArrayList<RandomListObject.RandomField>{
         public String toString() {
             return "RandomField{" +
                     "key='" + key + '\'' +
-                    ", value='" + value + '\'' +
+                    ", xmlValueString='" + xmlValueString + '\'' +
+                    ", javaValueString='" + javaValueString + '\'' +
                     ", fieldMethodName='" + fieldMethodName + '\'' +
                     '}';
         }

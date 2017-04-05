@@ -7,6 +7,10 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class IntegerRandom implements JavaValueRandom<Integer>{
     public Integer random(Integer range){
+        return IntegerRandom.localRandom(range);
+    }
+
+    public static Integer localRandom(Integer range){
         return ThreadLocalRandom.current().nextInt(range);
     }
 }
