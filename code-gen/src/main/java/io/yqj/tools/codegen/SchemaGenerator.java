@@ -86,14 +86,14 @@ public class SchemaGenerator implements CommandLineRunner {
 
 //        toReadServiceImpl(context, singleClass);
 
-//        generateTestEmptyXmlCondition(context, singleClass);
+        generateTestEmptyXmlCondition(context, singleClass);
 
-        List<RandomListObject> randomListObjects = RandomObjectUtil.toRandomListObject(singleClass.getFields(),  10);
+        List<RandomListObject> randomListObjects = RandomObjectUtil.toRandomListObject(singleClass.getFields(),  5);
 
         context.put("insertListObject", randomListObjects.get(0));
         context.put("totalListObject", randomListObjects);
 
-//        generateTestExceptXmlCondition(context, singleClass);
+        generateTestExceptXmlCondition(context, singleClass);
 
         toRandomTestClass(context, singleClass);
     }
