@@ -1,4 +1,5 @@
 
+import com.qingqing.common.util.JodaTimeUtil;
 import org.unitils.database.annotations.Transactional;
 import org.unitils.database.util.TransactionMode;
 import com.qingqing.api.constant.ConfigInFile;
@@ -10,7 +11,10 @@ import org.unitils.spring.annotation.SpringBeanByType;
 import junit.framework.Assert;
 import org.junit.Test;
 import java.util.Date;
+
+import java.util.ArrayList;
 import java.util.List;
+import com.qingqing.api.dao.UnitilsDaoTestBase;
 
 import static org.unitils.reflectionassert.ReflectionAssert.assertReflectionEquals;
 
@@ -35,17 +39,16 @@ public class {{singleClass.className}}MapperTest extends UnitilsDaoTestBase<{{si
     @DataSet(value = PREFIX_URI + "{{singleClass.className}}MapperTest-empty.xml", loadStrategy = CleanInsertLoadStrategy.class)
     public void testFindById(){
         preCreates();
-        {{singleClass.className}} {{singleClass.lowClassName}} = {{singleClass.lowClassName}}Mapper.findById({{singleClass.lowClassName}}List.getIndex(0).getId());
-        assertReflectionEquals({{singleClass.lowClassName}}List.getIndex(0), {{singleClass.lowClassName}}, ReflectionComparatorMode.IGNORE_DEFAULTS);
+        {{singleClass.className}} {{singleClass.lowClassName}} = {{singleClass.lowClassName}}Mapper.findById({{singleClass.lowClassName}}List.get(0).getId());
+        assertReflectionEquals({{singleClass.lowClassName}}List.get(0), {{singleClass.lowClassName}}, ReflectionComparatorMode.IGNORE_DEFAULTS);
     }
-
 
     // 创建数据 Insert
     private void preCreates(){
-{% for singleInsertListObject in totalListObject %}
+{% for singleInsertListObjectIndex in range(0, totalListObject.size - 1) %}
         {{singleClass.className}} {{singleClass.lowClassName}}{{loop.index}} = new {{singleClass.className}}();
-{% for insertListField in singleInsertListObject %}
-        {{singleClass.lowClassName}}.set{{insertListField.fieldMethodName}}({{insertListField.javaValueString | raw}});
+{% for insertListField in totalListObject[singleInsertListObjectIndex] %}
+        {{singleClass.lowClassName}}{{singleInsertListObjectIndex}}.set{{insertListField.fieldMethodName}}({{insertListField.javaValueString | raw}});
 {% endfor %}
         {{singleClass.lowClassName}}Mapper.create({{singleClass.lowClassName}}{{loop.index}});
         {{singleClass.lowClassName}}List.add({{singleClass.lowClassName}}{{loop.index}});
