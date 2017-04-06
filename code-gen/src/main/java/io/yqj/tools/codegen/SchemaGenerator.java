@@ -4,19 +4,14 @@ import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.io.Files;
-import com.google.common.util.concurrent.ExecutionError;
 import com.mitchellbosecke.pebble.template.PebbleTemplate;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader;
-import io.yqj.tools.codegen.component.InspectFieldFromBeans;
 import io.yqj.tools.codegen.component.InspectFieldFromDatasource;
 import io.yqj.tools.codegen.model.Field;
 import io.yqj.tools.codegen.model.RandomListObject;
-import io.yqj.tools.codegen.model.RandomObject;
 import io.yqj.tools.codegen.model.SingleClass;
 import io.yqj.tools.codegen.template.Pebbler;
 import io.yqj.tools.codegen.util.RandomObjectUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -25,7 +20,6 @@ import java.io.File;
 import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * Author:  <a href="mailto:i@terminus.io">jlchen</a>
@@ -39,19 +33,15 @@ public class SchemaGenerator implements CommandLineRunner {
 
     private final InspectFieldFromDatasource inspectFieldFromDatasource;
 
-    private final InspectFieldFromBeans inspectFieldFromBeans;
-
     private final MyConfiguration myConfiguration;
 
     List<String> tables = null;
 
     @Autowired
     public SchemaGenerator(Pebbler pebbler, MyConfiguration myConfiguration,
-                           InspectFieldFromDatasource inspectFieldFromDatasource,
-                           InspectFieldFromBeans inspectFieldFromBeans) {
+                           InspectFieldFromDatasource inspectFieldFromDatasource) {
         this.pebbler = pebbler;
         this.inspectFieldFromDatasource = inspectFieldFromDatasource;
-        this.inspectFieldFromBeans = inspectFieldFromBeans;
         this.myConfiguration = myConfiguration;
         tables = Lists.newArrayList();
     }

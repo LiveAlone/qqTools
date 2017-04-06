@@ -40,20 +40,6 @@ public class Field implements Serializable{
 
     private Class classType;
 
-    public static Field fromClassType(String fieldName, Class fieldType, String fieldComment){
-        Field field = Field.builder()
-                .fieldName(fieldName)
-                .fieldMethodName(StringConvert.classFieldToClassMethod(fieldName))
-                .fieldType(fieldType.getSimpleName())
-                .columnName(StringConvert.classFieldToTableColumn(fieldName))
-                .columnType(FieldTypeConvert.fieldTypeToColumnType(fieldType))
-                .columnMapperType(FieldTypeConvert.fieldTypeToColumnMapperType(fieldType))
-                .fieldComment(commentConvert(fieldComment)).build();
-
-        field.setClassType(FieldTypeConvert.fieldTypeToClassType(field.getFieldType()));
-        return field;
-    }
-
     public static Field fromColumnType(String columnName, String columnType, String fieldComment){
           Field field = Field.builder()
                 .fieldName(StringConvert.tableColumnToClassField(columnName))
