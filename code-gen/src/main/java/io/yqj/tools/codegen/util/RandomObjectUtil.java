@@ -1,13 +1,11 @@
 package io.yqj.tools.codegen.util;
 
-import com.google.common.collect.Lists;
 import io.yqj.tools.codegen.model.Field;
 import io.yqj.tools.codegen.model.RandomListObject;
 import io.yqj.tools.codegen.model.RandomObject;
 import io.yqj.tools.codegen.randomvalue.EnumRandomValueManager;
 import io.yqj.tools.codegen.randomvalue.RandomFormatter;
 import io.yqj.tools.codegen.randomvalue.RandomObjectManager;
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;

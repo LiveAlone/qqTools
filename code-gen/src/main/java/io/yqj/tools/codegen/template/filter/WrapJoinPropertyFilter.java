@@ -5,7 +5,6 @@ import io.yqj.tools.codegen.model.Field;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Author:  <a href="mailto:i@terminus.io">jlchen</a>
