@@ -66,26 +66,26 @@ public class SchemaGenerator implements CommandLineRunner {
         context.put("fieldNames",singleClass.queryFieldName());
         context.put("databaseName", myConfiguration.getDatabaseName());
 
-//        toClass(context, singleClass);
+        toClass(context, singleClass);
 
-//        toMapper(context, singleClass);
+        toMapper(context, singleClass);
 
-//        toDao(context, singleClass);
+        toDao(context, singleClass);
 
 //        toReadService(context, singleClass);
 
 //        toReadServiceImpl(context, singleClass);
 
-        generateTestEmptyXmlCondition(context, singleClass);
-
-        List<RandomListObject> randomListObjects = RandomObjectUtil.toRandomListObject(singleClass.getFields(),  5);
-
-        context.put("insertListObject", randomListObjects.get(0));
-        context.put("totalListObject", randomListObjects);
-
-        generateTestExceptXmlCondition(context, singleClass);
-
-        toRandomTestClass(context, singleClass);
+//        generateTestEmptyXmlCondition(context, singleClass);
+//
+//        List<RandomListObject> randomListObjects = RandomObjectUtil.toRandomListObject(singleClass.getFields(),  5);
+//
+//        context.put("insertListObject", randomListObjects.get(0));
+//        context.put("totalListObject", randomListObjects);
+//
+//        generateTestExceptXmlCondition(context, singleClass);
+//
+//        toRandomTestClass(context, singleClass);
     }
 
     private void toRandomTestClass(Map<String, Object> context, SingleClass singleClass){
