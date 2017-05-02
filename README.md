@@ -44,8 +44,8 @@
 ```
 
 配置文件的设计方式：
-1. yml 配置文件的方式, 添加Field , 忽略的Field
-1. Handler 基础配置方式， 通用字段Field, 特殊字段的Field 对应的配置方式。
+1 random 随机生成字段的配置方式。
+2 特殊字段， UserType, 对应的Xml 数据的枚举方式。
 
 
 

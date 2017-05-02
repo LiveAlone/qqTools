@@ -46,9 +46,9 @@ public class RandomObjectUtil implements ApplicationContextAware {
                 String javaFormatterType = null;
                 String xmlFormatterType = null;
                 if (enumRandomValueManager.isEnum(field.getColumnName())){
-                    String value = enumRandomValueManager.randomEnum(field.getColumnName());
-                    javaFormatterType = value;
-                    xmlFormatterType = value;
+                    EnumRandomValueManager.XmlClassRandomValue value = enumRandomValueManager.randomEnum(field.getColumnName());
+                    javaFormatterType = value.getClassValue();
+                    xmlFormatterType = value.getXmlValue();
                 }else {
                     Object value = randomObjectManager.randomValue(field.getClassType());
                     javaFormatterType = RandomFormatter.formatterJavaType(value);

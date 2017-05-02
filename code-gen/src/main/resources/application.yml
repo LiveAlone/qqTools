@@ -1,6 +1,6 @@
 spring:
     datasource:
-        url:  jdbc:mysql://127.0.0.1:3306/test_personal
+        url:  jdbc:mysql://127.0.0.1:3306/personal_database
         username: root
         password: anywhere
         driver-class-name:  com.mysql.jdbc.Driver
@@ -8,10 +8,16 @@ spring:
 local:
   databaseName: qq_data
   enums:
-    - package_status,10,20,30,40,50,60
     - package_type,1,2,3
     - create_user_type,0,1,2
     - discount_type,1,2,3,4
+  fieldValues:
+    user_type:
+      1: UserTyp.student
+      2: UserType.teacher
+    from_new:
+      1: FromNew.test1
+      2: FromNew.test2
 
 ignoreFields: id,is_deleted,create_time,last_update_time
 

@@ -4,6 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yaoqijun on 2017/3/30.
@@ -14,7 +15,7 @@ public class MyConfiguration {
 
     private String databaseName;
 
-    private List<String> enums;
+    private Map<String, Map<String, String>> fieldValues;
 
     public String getDatabaseName() {
         return databaseName;
@@ -24,11 +25,13 @@ public class MyConfiguration {
         this.databaseName = databaseName;
     }
 
-    public List<String> getEnums() {
-        return enums;
+    public Map<String, Map<String, String>> getFieldValues() {
+        return fieldValues;
     }
 
-    public void setEnums(List<String> enums) {
-        this.enums = enums;
+    public void setFieldValues(Map<String, Map<String, String>> fieldValues) {
+        this.fieldValues = fieldValues;
     }
 }
+
+
