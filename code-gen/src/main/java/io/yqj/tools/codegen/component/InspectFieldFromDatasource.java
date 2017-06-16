@@ -60,7 +60,7 @@ public class InspectFieldFromDatasource {
 
         databaseTables.forEach(s->
             singleClasses.add(
-                    SingleClass.buildByClassName(
+                    SingleClass.buildByTableName(
                             s.getTableName(),
                             s.getComment(),
                             queryInspectTableField(s.getTableName()))));
